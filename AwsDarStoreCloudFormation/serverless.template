@@ -1,0 +1,27 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application.",
+  "Resources": {
+  "ConfigBucket":{
+		"Type":"AWS::S3::Bucket",
+		"Properties": {
+			"BucketName":"bucket-darkstore"
+		}
+	},
+  "DataBase":{
+		"Type":"AWS::RDS::DBInstance",
+		"Properties": {
+			"DBInstanceClass":"db.t3.micro",
+			"DBName": "db_dark_store",
+			"AllocatedStorage":10,
+			"Engine":"postgres",
+			"EngineVersion":"14.4", 
+			"PubliclyAccessible":"true",
+			"MasterUsername":"postgres",
+			"MasterUserPassword":"postgres"
+		}
+	}
+  }
+}
+

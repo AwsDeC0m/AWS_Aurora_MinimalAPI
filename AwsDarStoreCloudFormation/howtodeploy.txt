@@ -1,0 +1,9 @@
+﻿
+// AWS CloudFormation Deploy 
+aws cloudformation deploy --template-file serverless.template --stack-name DarkStoreResorces
+
+// Migrations (usefull commands)
+dotnet ef database drop
+dotnet ef migrations remove
+dotnet ef database update
+dotnet ef migrations add InitialCreate --context AppDbContext -o ./Db/Migrations/
