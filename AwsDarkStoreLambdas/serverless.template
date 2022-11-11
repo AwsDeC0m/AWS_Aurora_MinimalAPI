@@ -1,0 +1,83 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "An AWS Serverless Application.",
+  "Resources": {
+    "GetAllStores": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Description" : "Get all Stores from DB",
+        "Handler": "AwsDarkStoreLambdas::AwsDarkStoreLambdas.Lambdas.GetStoresFunction::GetStores",
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/GetStores",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    },
+    "GetOneStore": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Description" : "Get one Stores from DB by id",
+        "Handler": "AwsDarkStoreLambdas::AwsDarkStoreLambdas.Lambdas.GetStoresFunction::GetStore",
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/GetStore/{id}",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    },
+    "PostStore": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": { 
+        "Description" : "Add new Store to DB",
+        "Handler": "AwsDarkStoreLambdas::AwsDarkStoreLambdas.Lambdas.PostStoreFunction::PostStore",
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/PostStore",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    }
+  }, 
+  "Globals" : { 
+      "Function" : {
+        "Runtime": "dotnet6",
+        "MemorySize": 256,
+        "Timeout": 30,         
+        "CodeUri": ""
+        }
+  },
+    "Outputs": {
+    "ApiURL": {
+      "Description": "API endpoint URL for Prod environment",
+      "Value": {
+        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-using AwsDarStoreCloudFormation.Db;
+using AwsDarkStoreCloudFormation.Db;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

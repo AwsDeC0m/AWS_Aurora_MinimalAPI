@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AwsDarStoreCloudFormation.Db.Migrations
+namespace AwsDarkStoreCloudFormation.Db.Migrations
 {
     public partial class InitialCreate : Migration
     {

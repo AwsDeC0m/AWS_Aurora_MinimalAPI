@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkStoreAPI", "DarkStoreAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDarkStore", "TestDarkStore\TestDarkStore.csproj", "{625A3728-37FA-4FDB-802C-97A058781CC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkStoreCommonLib", "DarkStoreCommonLib\DarkStoreCommonLib.csproj", "{212FCF81-75DF-4298-BE85-43E86DEB3E5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkStoreCommonLib", "DarkStoreCommonLib\DarkStoreCommonLib.csproj", "{212FCF81-75DF-4298-BE85-43E86DEB3E5E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsDarStoreCloudFormation", "AwsDarStoreCloudFormation\AwsDarStoreCloudFormation.csproj", "{3847CA7E-EC5E-4EE4-88B2-7EC5F1EF81FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsDarkStoreCloudFormation", "AwsDarkStoreCloudFormation\AwsDarkStoreCloudFormation.csproj", "{3847CA7E-EC5E-4EE4-88B2-7EC5F1EF81FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsDarkStoreLambdas", "AwsDarkStoreLambdas\AwsDarkStoreLambdas.csproj", "{9D61D240-335C-4C25-800F-CC310C0A1BB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3847CA7E-EC5E-4EE4-88B2-7EC5F1EF81FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3847CA7E-EC5E-4EE4-88B2-7EC5F1EF81FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3847CA7E-EC5E-4EE4-88B2-7EC5F1EF81FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D61D240-335C-4C25-800F-CC310C0A1BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D61D240-335C-4C25-800F-CC310C0A1BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D61D240-335C-4C25-800F-CC310C0A1BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D61D240-335C-4C25-800F-CC310C0A1BB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

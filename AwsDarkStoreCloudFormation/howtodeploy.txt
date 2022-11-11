@@ -4,6 +4,6 @@ aws cloudformation deploy --template-file serverless.template --stack-name DarkS
 
 // Migrations (usefull commands)
 dotnet ef database drop
-dotnet ef migrations remove
 dotnet ef database update
+dotnet ef migrations remove
 dotnet ef migrations add InitialCreate --context AppDbContext -o ./Db/Migrations/
