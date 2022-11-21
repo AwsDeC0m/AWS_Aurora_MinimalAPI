@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 /AwsDarStoreCloudFormation/Properties/launchSettings.json
 /AwsDarStoreCloudFormation/Controllers
+/AWSDarkStoreDynamoDB/Properties/launchSettings.json
