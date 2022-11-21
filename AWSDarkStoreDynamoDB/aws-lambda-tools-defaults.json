@@ -9,13 +9,13 @@
     "profile"     : "default",
     "region"      : "us-east-1",
     "configuration" : "Release",
-    "s3-prefix"     : "AwsDarkStoreLambdas/",
+    "s3-prefix"     : "AWSDarkStoreDynamoDB/",
     "template"      : "serverless.template",
     "template-parameters" : "",
     "framework"           : "net6.0",
     "function-architecture" : "x86_64",
-    "output-package"        : "C:\\Users\\v.akhmetov\\AppData\\Local\\Temp\\GetAllStores-CodeUri-Or-ImageUri-638044233645685768.zip",
+    "output-package"        : "C:\\Users\\v.akhmetov\\AppData\\Local\\Temp\\CreateTableAPI-CodeUri-Or-ImageUri-638046457618549918.zip",
     "disable-version-check" : false,
     "s3-bucket"             : "bucket-darkstore",
-    "stack-name"            : "DarkStoreLamdas"
+    "stack-name"            : "StackDynamoDB"
 }

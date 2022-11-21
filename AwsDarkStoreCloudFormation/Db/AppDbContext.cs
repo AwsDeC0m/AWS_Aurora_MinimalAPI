@@ -6,7 +6,7 @@ namespace AwsDarkStoreCloudFormation.Db;
 public class AppDbContext : DbContext
 {
     public AppDbContext() : base()
-    {}
+    { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -20,6 +20,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Store> Stores { get; set; }
     public DbSet<StoreOptions> StoreOptions { get; set; }
+}
 
 
 

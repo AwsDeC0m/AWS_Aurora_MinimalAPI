@@ -2,3 +2,5 @@
 // AWS Lambda Deploy 
 
 dotnet-lambda deploy-serverless -cfg aws-lambda-tools-defaults.json -pcfg true
+
+aws cloudformation deploy --template-file serverless.template --stack-name DarkStoreLambdas --capabilities CAPABILITY_IAM
