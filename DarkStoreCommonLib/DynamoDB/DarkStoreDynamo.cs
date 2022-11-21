@@ -1,11 +1,10 @@
-﻿using DarkStoreCommonLib.Db.Entities;
-namespace DarkStoreCommonLib.DynamoDB;
+﻿namespace DarkStoreCommonLib.DynamoDB;
 
-public class DarkStoreDynamo : BaseEntity
+public class DarkStoreDynamo
 {
     public string City { get; set; }
 
-    public string Name { get; set; }
+    public int NrStore { get; set; }
 
     public virtual DarkStoreOptionsDynamo Options { get; set; }
 }
