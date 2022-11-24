@@ -1,17 +1,15 @@
 using System.Net;
-using Amazon.Lambda.Core;
-using Amazon.Lambda.APIGatewayEvents;
-using Amazon.DynamoDBv2.Model;
-using Amazon.DynamoDBv2;
 using Newtonsoft.Json;
+using Amazon.DynamoDBv2;
+using Amazon.Lambda.Core;
+using Amazon.DynamoDBv2.Model;
+using DarkStoreCommonLib.Contracts;
+using Amazon.Lambda.APIGatewayEvents;
 using DarkStoreCommonLib.Contracts.Requests;
 
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+namespace AWSDarkStoreDynamoDB.Lambdas;
 
-namespace AWSDarkStoreDynamoDB;
-
-public class ActionTableFunctions
+public class ActionTableFunctions : BaseLambdaFunction
 {
     public ActionTableFunctions()
     { }
@@ -159,7 +157,7 @@ public class ActionTableFunctions
         int sleepDuration = 1000; // One second
 
         // Don't wait more than 10 seconds.
-        while ((tableStatus != waitingForStatus) && (sleepDuration < 10000))
+        while (tableStatus != waitingForStatus && sleepDuration < 10000)
         {
             resp = await client.DescribeTableAsync(new DescribeTableRequest
             {
@@ -168,7 +166,7 @@ public class ActionTableFunctions
 
             tableStatus = resp.Table.TableStatus;
 
-            System.Threading.Thread.Sleep(sleepDuration);
+            Thread.Sleep(sleepDuration);
             sleepDuration *= 2;
         }
 
@@ -196,7 +194,7 @@ public class ActionTableFunctions
                 tablePresent = false;
             }
 
-            System.Threading.Thread.Sleep(5000); // Wait 5 seconds.
+            Thread.Sleep(5000); // Wait 5 seconds.
         }
 
         return resp;

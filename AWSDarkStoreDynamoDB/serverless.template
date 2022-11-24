@@ -9,7 +9,7 @@
         "Architectures": [
           "x86_64"
         ],
-        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.ActionTableFunctions::CreateTable",
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.ActionTableFunctions::CreateTable",
         "Runtime": "dotnet6",
         "CodeUri": "",
         "MemorySize": 256,
@@ -37,7 +37,7 @@
         "Architectures": [
           "x86_64"
         ],
-        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.ActionTableFunctions::DeleteTable",
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.ActionTableFunctions::DeleteTable",
         "Runtime": "dotnet6",
         "CodeUri": "",
         "MemorySize": 256,
@@ -53,6 +53,62 @@
             "Type": "Api",
             "Properties": {
               "Path": "/DeleteTable",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+    "CreateItemAPI": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.CrudFunctions::CreateItem",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole", 
+          "AmazonDynamoDBFullAccess",
+          "AWSLambdaInvocation-DynamoDB"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/CreateItem",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+    "ReadItemAPI": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.CrudFunctions::ReadItem",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole", 
+          "AmazonDynamoDBFullAccess",
+          "AWSLambdaInvocation-DynamoDB"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/ReadItem",
               "Method": "POST"
             }
           }

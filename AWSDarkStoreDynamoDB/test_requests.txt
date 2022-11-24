@@ -1,0 +1,57 @@
+﻿= 1 = Request for Creating table
+
+    {
+    "Action": 1,
+    "TableName": "DarkStoreNoSQL",
+    "PartitionKey": "City",
+    "SortKey":"NrStore"
+    }
+
+= 2 = Request for Deleting table
+
+    {
+    "Action": 2,
+    "TableName": "DarkStoreNoSQL"
+    }
+
+
+
+= 3 = Request for Creating  item (two modes in RequestCommandMode)
+
+    {
+      "City": "London",
+      "NrStore": 11,
+      "Options": {
+        "Address": "Address 322",
+        "Square": 100.01,
+        "ParkingSize": 101,
+        "HasGroceries": true,
+        "HasHouseholdGoods": false
+      },
+      "TableName":"DarkStoreNoSQL",
+      "RequestCommandMode": 2 // or 1
+    }
+
+= 4.1 = Request for ReadItem   (three modes in RequestCommandMode)
+
+    {
+      "City": "Paris",
+      "NrStore": 3,
+      "TableName":"DarkStoreNoSQL", 
+      "RequestCommandMode": 1 
+    }
+
+= 4.2 = Request for ReadItem   (for modes in RequestCommandMode = 2)
+    {
+      "City": "Paris",
+      "NrStore": 3,
+      "TableName":"DarkStoreNoSQL",
+      "RequestCommandMode": 2
+    }
+
+= 4.3 = Request for ReadItem   (for modes in RequestCommandMode = 3)
+    {
+      "City": "Paris",
+      "NrStore": 3,
+      "RequestCommandMode": 3
+    }
