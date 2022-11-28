@@ -14,7 +14,7 @@
     "template-parameters" : "",
     "framework"           : "net6.0",
     "function-architecture" : "x86_64",
-    "output-package"        : "C:\\Users\\v.akhmetov\\AppData\\Local\\Temp\\CreateTableAPI-CodeUri-Or-ImageUri-638049246018060375.zip",
+    "output-package"        : "C:\\Users\\v.akhmetov\\AppData\\Local\\Temp\\CreateTableAPI-CodeUri-Or-ImageUri-638052341624548126.zip",
     "disable-version-check" : false,
     "s3-bucket"             : "bucket-darkstore",
     "stack-name"            : "StackDynamoDB"
