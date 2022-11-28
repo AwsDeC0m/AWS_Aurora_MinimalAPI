@@ -19,6 +19,7 @@ public class CrudFunctions : BaseLambdaFunction
 {
     private static AmazonDynamoDBClient client = new AmazonDynamoDBClient();
     private DarkStoreDynamo storeBody = new();
+    private Document document;
 
     public CrudFunctions()
     { }
@@ -122,7 +123,9 @@ public class CrudFunctions : BaseLambdaFunction
 
                     var response = await client.GetItemAsync(requestGet);
 
-                    return GenerealResponse(HttpStatusCode.OK, $"Item has been read. Item: {JsonConvert.SerializeObject(response)}");
+                    document = Document.FromAttributeMap(response.Item);
+
+                    return GenerealResponse(HttpStatusCode.OK, $"Items has been read. >>> Doc: {JsonConvert.SerializeObject(document)}");
 
                     break;
 
@@ -145,7 +148,7 @@ public class CrudFunctions : BaseLambdaFunction
                                      },
                                     new Dictionary<string, AttributeValue> {
                                         { "City", new AttributeValue { S = "London" }},
-                                        { "NrStore", new AttributeValue { N = "2"}}
+                                        { "NrStore", new AttributeValue { N = "3"}}
                                      },
                                     new Dictionary<string, AttributeValue> {
                                         { "City", new AttributeValue { S = "Rome" }},
@@ -170,7 +173,13 @@ public class CrudFunctions : BaseLambdaFunction
 
                     var responseBatch = await client.BatchGetItemAsync(requestBatch);
 
-                    return GenerealResponse(HttpStatusCode.OK, $"Items has been read. Item: {JsonConvert.SerializeObject(responseBatch)}");
+                    List<Document> docResult = new();
+                    foreach (var item in responseBatch.Responses[storeBody.TableName])
+                    {
+                        docResult.Add(Document.FromAttributeMap(item));
+                    }
+
+                    return GenerealResponse(HttpStatusCode.OK, $"Items has been read. >>> Doc: {JsonConvert.SerializeObject(docResult)} ");
 
                     break;
 
@@ -205,10 +214,8 @@ public class CrudFunctions : BaseLambdaFunction
         catch (Exception e)
         { return GenerealResponse(HttpStatusCode.NotModified, $" #3 (by mode = {storeBody.RequestCommandMode}) Error: {e.Message}. {e.InnerException}"); }
 
+
         return GenerealResponse(HttpStatusCode.OK, $"Items has been read.");
-
-
-
     }
 
 
@@ -216,6 +223,50 @@ public class CrudFunctions : BaseLambdaFunction
     {
         if (!RequestValid(request, context))
             return GenerealResponse(HttpStatusCode.BadRequest, "Check the request data.");
+
+        try
+        {
+            // Define the name of a user account to update.
+            // Note that in this example, we have to alias "name"
+            // using ExpressionAttributeNames as name is a reserved word in DynamoDB.
+            var requestUpd = new UpdateItemRequest
+            {
+                TableName = storeBody.TableName,
+                Key = new Dictionary<string, AttributeValue>
+                    {
+                        { "City", new AttributeValue { S = storeBody.City} },
+                        { "NrStore", new AttributeValue { N = storeBody.NrStore.ToString()} }
+                    },
+                UpdateExpression = "set #bool = :boolvalue, #addr = :addrvalue",
+                ConditionExpression = "#parking > :minsize",
+                ExpressionAttributeNames = new Dictionary<string, string>
+                    {
+                        { "#bool", nameof(storeBody.Options.HasGroceries) },
+                        { "#addr", nameof(storeBody.Options.Address) },
+                        { "#parking", nameof(storeBody.Options.ParkingSize) }
+                    },
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                    {
+                        { ":boolvalue", new AttributeValue {BOOL = storeBody.Options.HasGroceries} },
+                        { ":addrvalue", new AttributeValue {S = storeBody.Options.Address} },
+                        { ":minsize", new AttributeValue {N = "100"} }
+                    },
+                ReturnValues = ReturnValue.ALL_NEW
+            };
+
+            var response = await client.UpdateItemAsync(requestUpd);
+            Document docUpdated = Document.FromAttributeMap(response.Attributes);
+
+
+            return GenerealResponse(HttpStatusCode.OK, $"Item has been updated. Response: {JsonConvert.SerializeObject(docUpdated)}");
+
+        }
+        catch (AmazonDynamoDBException e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #1 (by mode = {storeBody.RequestCommandMode}) Error: {e.Message}. {e.InnerException}"); }
+        catch (AmazonServiceException e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #2 (by mode = {storeBody.RequestCommandMode}) Error: {e.Message}. {e.InnerException}"); }
+        catch (Exception e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #3 (by mode = {storeBody.RequestCommandMode}) Error: {e.Message}. {e.InnerException}"); }
 
 
         return GenerealResponse(HttpStatusCode.OK, "Item has been updated.");
@@ -226,6 +277,40 @@ public class CrudFunctions : BaseLambdaFunction
     {
         if (!RequestValid(request, context))
             return GenerealResponse(HttpStatusCode.BadRequest, "Check the request data.");
+
+        try
+        {
+            var requestDel = new DeleteItemRequest
+            {
+                TableName = storeBody.TableName,
+                Key = new Dictionary<string, AttributeValue>
+                    {
+                        { "City", new AttributeValue { S = storeBody.City} },
+                        { "NrStore", new AttributeValue { N = storeBody.NrStore.ToString()} }
+                    },
+                ConditionExpression = "#parking = :minsize",
+                ExpressionAttributeNames = new Dictionary<string, string>
+                    {
+                        { "#parking", nameof(storeBody.Options.ParkingSize) }
+                    },
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                    {
+                        { ":minsize", new AttributeValue {N = "100"} }
+                    }
+
+            };
+
+            var response = await client.DeleteItemAsync(requestDel);
+
+            return GenerealResponse(HttpStatusCode.OK, $"Item has been deleted. Response: {JsonConvert.SerializeObject(response)}");
+
+        }
+        catch (AmazonDynamoDBException e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #1  Error: {e.Message}. {e.InnerException}"); }
+        catch (AmazonServiceException e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #2  Error: {e.Message}. {e.InnerException}"); }
+        catch (Exception e)
+        { return GenerealResponse(HttpStatusCode.NotModified, $" #3  Error: {e.Message}. {e.InnerException}"); }
 
 
         return GenerealResponse(HttpStatusCode.OK, "Item has been deleted.");
@@ -257,6 +342,10 @@ public class CrudFunctions : BaseLambdaFunction
 
         return true;
     }
+
+
+
+
 
 
 }

@@ -15,7 +15,6 @@
     }
 
 
-
 = 3 = Request for Creating  item (two modes in RequestCommandMode)
 
     {
@@ -55,3 +54,23 @@
       "NrStore": 3,
       "RequestCommandMode": 3
     }
+
+= 5 = Request for UpdateItem   
+
+{
+  "City": "London",
+  "NrStore": 2,
+  "Options": {
+    "Address": "New 14 Address in London",
+    "HasGroceries": false
+  },
+  "TableName":"DarkStoreNoSQL"
+}
+
+= 6 = Request for DeleteItem  
+
+{
+  "City": "London",
+  "NrStore": 1,
+  "TableName":"DarkStoreNoSQL"
+}

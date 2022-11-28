@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Amazon.DynamoDBv2;
 using Amazon.Lambda.Core;
 using Amazon.DynamoDBv2.Model;
-using DarkStoreCommonLib.Contracts;
 using Amazon.Lambda.APIGatewayEvents;
 using DarkStoreCommonLib.Contracts.Requests;
 
@@ -28,13 +27,14 @@ public class ActionTableFunctions : BaseLambdaFunction
 
         context.Logger.LogInformation($"\n \n TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'");
 
-        if (string.IsNullOrWhiteSpace(actionDb?.TableName))
+        if (string.IsNullOrWhiteSpace(actionDb?.TableName) || actionDb.Action != ActionDynamoDbRequest.DbActions.CreateTableAction)
             return new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,
                 Body = $"Check the request data. TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'",
                 Headers = new Dictionary<string, string> { { "Content-Type", "text/plain" } }
             };
+
 
         DescribeTableResponse tableResp = new DescribeTableResponse();
 
@@ -111,7 +111,8 @@ public class ActionTableFunctions : BaseLambdaFunction
 
         context.Logger.LogInformation($"\n \n TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'");
 
-        if (string.IsNullOrWhiteSpace(actionDb?.TableName))
+        if (string.IsNullOrWhiteSpace(actionDb?.TableName) || actionDb.Action != ActionDynamoDbRequest.DbActions.DeleteTableAction)
+
             return new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,
@@ -128,7 +129,7 @@ public class ActionTableFunctions : BaseLambdaFunction
 
         var requestDel = new DeleteTableRequest
         {
-            TableName = tableName,
+            TableName = tableName
         };
 
         var response = await client.DeleteTableAsync(requestDel);

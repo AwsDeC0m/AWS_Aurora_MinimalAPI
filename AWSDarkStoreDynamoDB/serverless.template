@@ -114,6 +114,62 @@
           }
         }
       }
+    },
+    "UpdateItemAPI": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.CrudFunctions::UpdateItem",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole", 
+          "AmazonDynamoDBFullAccess",
+          "AWSLambdaInvocation-DynamoDB"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/UpdateItem",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+    "DeleteItemAPI": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.CrudFunctions::DeleteItem",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole", 
+          "AmazonDynamoDBFullAccess",
+          "AWSLambdaInvocation-DynamoDB"
+        ],
+        "Events": {
+          "RootGet": {
+            "Type": "Api",
+            "Properties": {
+              "Path": "/DeleteItem",
+              "Method": "POST"
+            }
+          }
+        }
+      }
     }
   },
   "Outputs": {
