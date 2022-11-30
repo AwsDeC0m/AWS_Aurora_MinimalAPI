@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsDarkStoreLambdas", "AwsD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSDarkStoreDynamoDB", "AWSDarkStoreDynamoDB\AWSDarkStoreDynamoDB.csproj", "{2AD21715-C36A-4907-B3BE-15BAF815357A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSTestApi", "AWSTestApi\AWSTestApi.csproj", "{2FA081F7-6D88-4E2E-B461-EC538716A1A4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{2AD21715-C36A-4907-B3BE-15BAF815357A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AD21715-C36A-4907-B3BE-15BAF815357A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AD21715-C36A-4907-B3BE-15BAF815357A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FA081F7-6D88-4E2E-B461-EC538716A1A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FA081F7-6D88-4E2E-B461-EC538716A1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FA081F7-6D88-4E2E-B461-EC538716A1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FA081F7-6D88-4E2E-B461-EC538716A1A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

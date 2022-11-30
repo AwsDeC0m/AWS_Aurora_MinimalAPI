@@ -21,11 +21,11 @@ public class ActionTableFunctions : BaseLambdaFunction
     /// <returns>The API Gateway response.</returns>
     public async Task<APIGatewayProxyResponse> CreateTable(APIGatewayProxyRequest request, ILambdaContext context)
     {
-        context.Logger.LogInformation($"\n CreateTable Request:{JsonConvert.SerializeObject(request)} \n");
+        //context.Logger.LogInformation($"\n CreateTable Request:{JsonConvert.SerializeObject(request)} \n");
 
         var actionDb = JsonConvert.DeserializeObject<ActionDynamoDbRequest>(request.Body);
 
-        context.Logger.LogInformation($"\n \n TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'");
+        //context.Logger.LogInformation($"\n \n TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'");
 
         if (string.IsNullOrWhiteSpace(actionDb?.TableName) || actionDb.Action != ActionDynamoDbRequest.DbActions.CreateTableAction)
             return new APIGatewayProxyResponse
@@ -34,7 +34,6 @@ public class ActionTableFunctions : BaseLambdaFunction
                 Body = $"Check the request data. TableName = '{actionDb?.TableName}', Action = '{actionDb?.Action}'",
                 Headers = new Dictionary<string, string> { { "Content-Type", "text/plain" } }
             };
-
 
         DescribeTableResponse tableResp = new DescribeTableResponse();
 
@@ -74,13 +73,19 @@ public class ActionTableFunctions : BaseLambdaFunction
                                                   KeyType = "RANGE",
                                                 },
                                               },
-            BillingMode = "PAY_PER_REQUEST"
+            BillingMode = "PAY_PER_REQUEST",
             //,ProvisionedThroughput = new ProvisionedThroughput
             //{
             //    ReadCapacityUnits = 1,
             //    WriteCapacityUnits = 1,
             //}
-        });
+            StreamSpecification = new StreamSpecification()
+            {
+                StreamEnabled = true,
+                StreamViewType = "NEW_AND_OLD_IMAGES"
+            }
+
+        }); ;
 
         tableResp = await WaitForTableToBeCreated(client, tableName, response.TableDescription.TableStatus);
 
