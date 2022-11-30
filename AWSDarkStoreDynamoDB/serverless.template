@@ -170,7 +170,27 @@
           }
         }
       }
+    },
+    "StreamTrigger": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Architectures": [
+          "x86_64"
+        ],
+        "Handler": "AWSDarkStoreDynamoDB::AWSDarkStoreDynamoDB.Lambdas.StreamFunctions::StreamHandler",
+        "Runtime": "dotnet6",
+        "CodeUri": "",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": null,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole", 
+          "AmazonDynamoDBFullAccess",
+          "AWSLambdaInvocation-DynamoDB"
+        ]
+      }
     }
+
   },
   "Outputs": {
     "ApiURL": {
