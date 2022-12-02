@@ -187,7 +187,18 @@
           "AWSLambdaBasicExecutionRole", 
           "AmazonDynamoDBFullAccess",
           "AWSLambdaInvocation-DynamoDB"
-        ]
+        ], 
+        "Events" : { 
+            "DynamoDBTrigger": {          
+                "Type" : "DynamoDB",
+                "Properties" : { 
+                    "BatchSize" : 2,  
+                    "StartingPosition" : "LATEST",
+                    "Stream"           :  "arn:aws:dynamodb:us-east-1:455325759024:table/DarkStoreNoSQL/stream/2022-11-30T15:26:38.783"
+                    }
+                }
+            }
+
       }
     }
 

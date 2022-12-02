@@ -28,18 +28,25 @@ namespace AWSDarkStoreDynamoDB.Lambdas
                 context.Logger.LogInformation($"Event Name: {record.EventName}");
 
 
-                var odlImage =  GetImage<DarkStoreDynamoSimple>(record.Dynamodb.OldImage);
+                var odlImage = GetImage<DarkStoreDynamoSimple>(record.Dynamodb.OldImage);
                 context.Logger.LogInformation($"OldImage >> : {JsonConvert.SerializeObject(odlImage)}");
 
                 var newImage = GetImage<DarkStoreDynamoSimple>(record.Dynamodb.NewImage);
                 context.Logger.LogInformation($"NewImage >> : {JsonConvert.SerializeObject(newImage)}");
+
+
+                if (newImage.ParkingSize == 222)
+                {
+                    context.Logger.LogInformation($"ERROR !!!");
+                    throw new Exception($"Unexpectible ParkingSize value = {newImage.ParkingSize }");
+                }
 
             }
 
             context.Logger.LogInformation("Stream processing complete.");
         }
 
-        private T GetImage <T>(Dictionary <string, AttributeValue> dict)
+        private T GetImage<T>(Dictionary<string, AttributeValue> dict)
         {
             var docImage = Document.FromAttributeMap(dict);
             return _dynamoDBContext.FromDocument<T>(docImage);
